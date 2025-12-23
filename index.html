@@ -1,76 +1,113 @@
 <!DOCTYPE html>
+
 <html lang="fi">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Juhlasivu</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: Arial, Helvetica, sans-serif;
       overflow: hidden;
+      font-family: Arial, sans-serif;
+      transition: background 0.5s;
     }
 
-    h1 {
-      font-size: 3em;
-      color: white;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      animation: pop 1.5s ease-out forwards;
-      z-index: 10;
-    }
+```
+h1 {
+  font-size: 3em;
+  animation: pop 1.5s ease-out forwards;
+  z-index: 10;
+  transition: all 0.5s;
+}
 
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 0; }
-      60% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); }
-    }
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
 
-    .emoji {
-      position: absolute;
-      font-size: 2em;
-      user-select: none;
-      pointer-events: none;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
+.emoji {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
 
-    @keyframes fall {
-      0% { transform: translateY(-10vh) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
-    }
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+.controls {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.8);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  z-index: 20;
+}
+
+.controls input {
+  width: 80px;
+}
+```
+
   </style>
 </head>
 <body>
+  <div class="controls">
+    <input type="text" id="nimi" placeholder="Nimi">
+    <input type="text" id="juhla" placeholder="Juhla">
+    <input type="text" id="emoji" placeholder="Emoji">
+    <input type="number" id="count" placeholder="Määrä">
+    <input type="number" id="duration" placeholder="Kesto">
+    <button onclick="updateMessage()">Päivitä</button>
+  </div>
+
   <h1 id="message">Hyvää juhlaa!</h1>
 
   <script>
-    // URL-parametrit
-    const params = new URLSearchParams(window.location.search);
-    const nimi = params.get("nimi") || "ystävä";
-    const juhla = params.get("juhla") || "juhlaa";
-    const emoji = params.get("emoji") || "🎉";
-    const emoCount = parseInt(params.get("count")) || 40;
-
-    // Teksti suoraan parametreista
-    const teksti = "Hyvää " + juhla + ", " + nimi + "! " + emoji;
-    document.getElementById("message").textContent = teksti;
-
-    // Tippuvat emojit
-    for (let i = 0; i < emoCount; i++) {
-      const e = document.createElement("div");
-      e.className = "emoji";
-      e.textContent = emoji;
-      e.style.left = Math.random() * 100 + "vw";
-      e.style.fontSize = 20 + Math.random() * 20 + "px";
-      e.style.animationDuration = 2 + Math.random() * 3 + "s";
-      e.style.animationDelay = Math.random() * 4 + "s";
-      document.body.appendChild(e);
+    function createEmojis(emoji, count, sizeMin, sizeMax, duration){
+      document.querySelectorAll('.emoji').forEach(e => e.remove());
+      for (let i = 0; i < count; i++){
+        const e = document.createElement('div');
+        e.className = 'emoji';
+        e.textContent = emoji;
+        e.style.left = Math.random()*100 + 'vw';
+        e.style.fontSize = (sizeMin + Math.random()*(sizeMax-sizeMin)) + 'px';
+        e.style.animationDuration = (duration + Math.random()*duration) + 's';
+        e.style.animationDelay = Math.random()*duration + 's';
+        document.body.appendChild(e);
+      }
     }
+
+    function updateMessage(){
+      const nimi = document.getElementById('nimi').value || 'ystävä';
+      const juhla = document.getElementById('juhla').value || 'juhlaa';
+      const emoji = document.getElementById('emoji').value || '🎉';
+      const count = parseInt(document.getElementById('count').value) || 40;
+      const duration = parseFloat(document.getElementById('duration').value) || 3;
+
+      document.getElementById('message').textContent = `Hyvää ${juhla}, ${nimi}! ${emoji}`;
+      createEmojis(emoji, count, 20, 40, duration);
+    }
+
+    // Käynnistä oletus
+    updateMessage();
   </script>
+
 </body>
 </html>
+
