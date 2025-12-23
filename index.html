@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Juhlasivu</title>
+
+  <!-- Favicon (emoji) -->
+  <link id="favicon" rel="icon" href="">
+
   <style>
     body {
       margin: 0;
@@ -56,8 +60,8 @@
     const emoji = params.get("emoji") || "🎉";
     const emoCount = parseInt(params.get("count")) || 40;
 
-    // Teksti suoraan parametreista
-    const teksti = "Hyvää " + juhla + ", " + nimi + "! " + emoji;
+    // Päivitetään viesti
+    const teksti = `Hyvää ${juhla}, ${nimi}! ${emoji}`;
     document.getElementById("message").textContent = teksti;
 
     // Tippuvat emojit
@@ -71,6 +75,10 @@
       e.style.animationDelay = Math.random() * 4 + "s";
       document.body.appendChild(e);
     }
+
+    // Päivitetään favicon dynaamisesti
+    const favicon = document.getElementById("favicon");
+    favicon.href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='50%' font-size='60'>${emoji}</text></svg>`;
   </script>
 </body>
 </html>
