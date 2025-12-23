@@ -28,11 +28,10 @@ Tämä projekti on yksinkertainen HTML-sivu, joka toivottaa käyttäjälle hyvä
 
 ## Käyttöohjeet
 
-1. Tallenna tiedosto nimellä `juhlasivu.html`.
-2. Avaa selaimessa ja lisää URL-parametrit. Esimerkki monilla argumentoilla:
+1. Avaa selaimessa ja lisää URL-parametrit. Esimerkki monilla argumentoilla:
 
 ```
-file:///polku/juhlasivu.html?nimi=Otso&juhla=syntymäpäivää&emoji=🎂&count=50&duration=3&sizeMin=20&sizeMax=40&bgColor1=%23ff9a9e&bgColor2=%23fad0c4&font=Arial&textColor=white&shadowColor=rgba(0,0,0,0.3)&popScale=1.2
+file:///polku/juhlasivu.html?nimi=Octocat&juhla=syntymäpäivää&emoji=🎂&count=50&duration=3&sizeMin=20&sizeMax=40&bgColor1=%23ff9a9e&bgColor2=%23fad0c4&font=Arial&textColor=white&shadowColor=rgba(0,0,0,0.3)&popScale=1.2
 ```
 
 3. Sivulla näytetään viesti ja tippuvat emojit juuri määrittämilläsi asetuksilla.
