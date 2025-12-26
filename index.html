@@ -59,10 +59,11 @@
     const juhla = params.get("juhla") || "juhlaa";
     const emoji = params.get("emoji") || "🎉";
     const emoCount = parseInt(params.get("count")) || 40;
+    const tervehdys = params.get("tervehdys") || "Hyvää";
 
-    // Päivitetään viesti
-    const teksti = `Hyvää ${juhla}, ${nimi}! ${emoji}`;
-    document.getElementById("message").textContent = teksti;
+    document.getElementById('message').textContent =
+      `${tervehdys} ${juhla}, ${nimi}! ${emoji}`;
+
 
     // Tippuvat emojit
     for (let i = 0; i < emoCount; i++) {
