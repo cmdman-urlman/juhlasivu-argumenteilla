@@ -21,7 +21,7 @@ Tämä projekti on yksinkertainen HTML-sivu, joka toivottaa käyttäjälle hyvä
 1. Avaa selaimessa ja lisää URL-parametrit:
 
 ```
-https://cmdman-urlman.github.io/juhlasivu-argumenteilla/?nimi=Octocat&juhla=syntymäpäivää&emoji=🎂&count=50
+https://cmdman-urlman.github.io/juhlasivu-argumenteilla/?tervehdys=Iloista&nimi=Octocat&juhla=syntymäpäivää&emoji=🎂&count=50
 ```
 
 3. Sivulla näytetään viesti ja tippuvat emojit.
