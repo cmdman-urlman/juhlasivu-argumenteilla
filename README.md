@@ -5,11 +5,12 @@ Tämä projekti on yksinkertainen HTML-sivu, joka toivottaa käyttäjälle hyvä
 ## Ominaisuudet
 
 * **URL-parametrit:**
-  *`tervehdys` - tervehdys(esim. Hyvää, Iloista)
+  * `tervehdys` – tervehdys (esim. Hyvää, Iloista)
   * `nimi` – vastaanottajan nimi
   * `juhla` – juhlan tyyppi (esim. syntymäpäivää, joulua)
-  * `emoji` – tippuvan emojin tyyppi (esim. 🎉, 🎂)
+  * `emoji` – tippuvien emojien tyyppit (esim. 🎉, 🎂🥳)
   * `count` – tippuvien emojien määrä
+
 
 * Animoitu tekstin pop-effect
 
