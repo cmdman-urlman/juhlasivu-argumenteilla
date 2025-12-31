@@ -1,85 +1,74 @@
 <!DOCTYPE html>
+
 <html lang="fi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Juhlasivu</title>
-
-  <!-- Favicon (emoji) -->
-  <link id="favicon" rel="icon" href="">
-
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: Arial, Helvetica, sans-serif;
-      overflow: hidden;
-    }
-
-    h1 {
-      font-size: 3em;
-      color: white;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      animation: pop 1.5s ease-out forwards;
-      z-index: 10;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 0; }
-      60% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    .emoji {
-      position: absolute;
-      font-size: 2em;
-      user-select: none;
-      pointer-events: none;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-10vh) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Juhlasivu</title>
+<link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🎉</text></svg>">
+<style>
+  body { margin:0; height:100vh; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:Arial, sans-serif; transition:background 0.5s; }
+  h1 { font-size:3em; animation:pop 1.5s ease-out forwards; z-index:10; text-align:center; }
+  @keyframes pop { 0%{transform:scale(0);opacity:0;}60%{transform:scale(1.2);opacity:1;}100%{transform:scale(1);} }
+  .emoji { position:absolute; user-select:none; pointer-events:none; animation-name:fall; animation-timing-function:linear; animation-iteration-count:infinite; }
+  @keyframes fall { 0%{transform:translateY(-10vh) rotate(0deg);}100%{transform:translateY(110vh) rotate(360deg);} }
+  .controls { position:fixed; top:10px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.8); padding:10px; border-radius:10px; display:flex; flex-wrap:wrap; gap:5px; z-index:20; }
+  .controls input { width:100px; }
+</style>
 </head>
 <body>
-  <h1 id="message">Hyvää juhlaa!</h1>
+<div class="controls">
+  <input type="text" id="tervehdys" placeholder="Tervehdys (esim. Hyvää)">
+  <input type="text" id="nimi" placeholder="Nimi">
+  <input type="text" id="juhla" placeholder="Juhla">
+  <input type="text" id="emoji" placeholder="Emoji (esim. ❤️🥳)">
+  <input type="number" id="count" placeholder="Määrä">
+  <input type="number" id="duration" placeholder="Kesto">
+  <button onclick="updateMessage()">Päivitä</button>
+</div>
+<h1 id="message">Hyvää juhlaa!</h1>
+<script>
+const params = new URLSearchParams(window.location.search);
 
-  <script>
-    // URL-parametrit
-    const params = new URLSearchParams(window.location.search);
-    const nimi = params.get("nimi") || "ystävä";
-    const juhla = params.get("juhla") || "juhlaa";
-    const emoji = params.get("emoji") || "🎉";
-    const emoCount = parseInt(params.get("count")) || 40;
-    const tervehdys = params.get("tervehdys") || "Hyvää";
+function createEmojis(emojis,count,sizeMin,sizeMax,duration){
+document.querySelectorAll('.emoji').forEach(e=>e.remove());
+for(let i=0;i<count;i++){
+const e=document.createElement('div');
+e.className='emoji';
+const emojiChar=emojis[Math.floor(Math.random()*emojis.length)];
+e.textContent=emojiChar;
+e.style.left=Math.random()*100+'vw';
+e.style.fontSize=(sizeMin+Math.random()*(sizeMax-sizeMin))+'px';
+e.style.animationDuration=(duration+Math.random()*duration)+'s';
+e.style.animationDelay=Math.random()*duration+'s';
+document.body.appendChild(e);
+}
+}
 
-    document.getElementById('message').textContent =
-      `${tervehdys} ${juhla}, ${nimi}! ${emoji}`;
+function updateFavicon(emojis){
+let i=0;
+setInterval(()=>{
+const favicon=document.getElementById('favicon');
+const emojiChar=emojis[i%emojis.length];
+favicon.href=`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>${emojiChar}</text></svg>`;
+i++;
+},1000);
+}
 
+function updateMessage(){
+const tervehdys=document.getElementById('tervehdys').value||params.get('tervehdys')||'Hyvää';
+const nimi=document.getElementById('nimi').value||params.get('nimi')||'ystävä';
+const juhla=document.getElementById('juhla').value||params.get('juhla')||'juhlaa';
+const emojiStr=document.getElementById('emoji').value||params.get('emoji')||'🎉';
+const emojis=[...emojiStr];
+const count=parseInt(document.getElementById('count').value||params.get('count'))||40;
+const duration=parseFloat(document.getElementById('duration').value||params.get('duration'))||3;
 
-    // Tippuvat emojit
-    for (let i = 0; i < emoCount; i++) {
-      const e = document.createElement("div");
-      e.className = "emoji";
-      e.textContent = emoji;
-      e.style.left = Math.random() * 100 + "vw";
-      e.style.fontSize = 20 + Math.random() * 20 + "px";
-      e.style.animationDuration = 2 + Math.random() * 3 + "s";
-      e.style.animationDelay = Math.random() * 4 + "s";
-      document.body.appendChild(e);
-    }
+document.getElementById('message').textContent=`${tervehdys} ${juhla}, ${nimi}! ${emojiStr}`;
+createEmojis(emojis,count,20,40,duration);
+updateFavicon(emojis);
+}
 
-    // Päivitetään favicon dynaamisesti
-    const favicon = document.getElementById("favicon");
-    favicon.href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='50%' font-size='60'>${emoji}</text></svg>`;
-  </script>
+updateMessage(); </script>
+
 </body>
 </html>
