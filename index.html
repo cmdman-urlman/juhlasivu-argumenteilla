@@ -10,21 +10,9 @@
   h1 { font-size:3em; animation:pop 1.5s ease-out forwards; z-index:10; text-align:center; }
   @keyframes pop { 0%{transform:scale(0);opacity:0;}60%{transform:scale(1.2);opacity:1;}100%{transform:scale(1);} }
   .emoji { position:absolute; user-select:none; pointer-events:none; animation-name:fall; animation-timing-function:linear; animation-iteration-count:infinite; }
-  @keyframes fall { 0%{transform:translateY(-10vh) rotate(0deg);}100%{transform:translateY(110vh) rotate(360deg);} }
-  .controls { position:fixed; top:10px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.8); padding:10px; border-radius:10px; display:flex; flex-wrap:wrap; gap:5px; z-index:20; }
-  .controls input { width:100px; }
 </style>
 </head>
 <body>
-<div class="controls">
-  <input type="text" id="tervehdys" placeholder="Tervehdys (esim. Hyvää)">
-  <input type="text" id="nimi" placeholder="Nimi">
-  <input type="text" id="juhla" placeholder="Juhla">
-  <input type="text" id="emoji" placeholder="Emoji (esim. ❤️🥳)">
-  <input type="number" id="count" placeholder="Määrä">
-  <input type="number" id="duration" placeholder="Kesto">
-  <button onclick="updateMessage()">Päivitä</button>
-</div>
 <h1 id="message">Hyvää juhlaa!</h1>
 <script>
 const params = new URLSearchParams(window.location.search);
